@@ -11,6 +11,7 @@ from etsyv3.models.listing_request import (
     UpdateListingPropertyRequest,
     UpdateVariationImagesRequest,
     UploadListingImageRequest,
+    UploadListingFileRequest,
 )
 from etsyv3.models.receipt_request import (CreateReceiptShipmentRequest,
                                            UpdateShopReceiptRequest)
@@ -150,6 +151,12 @@ class EtsyAPI:
                     uri,
                     files=request_payload.image,
                     data=request_payload.data
+                )
+            elif method == method.POST and isinstance(request_payload, UploadListingFileRequest):
+                return_val = self.session.post(
+                    uri,
+                    files=request_payload.file,
+                    # data=request_payload.data
                 )
             elif method == method.POST:
                 return_val = self.session.post(uri, json=request_payload.get_dict())

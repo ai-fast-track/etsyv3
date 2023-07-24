@@ -339,3 +339,39 @@ class UploadListingImageRequest(Request):
         with open(file, "rb") as image:
             image_bytes = image.read()
         return image_bytes
+
+class UploadListingFileRequest(Request):
+    nullable = ["file"]
+    mandatory = []
+
+    def __init__(
+        self,
+        file_bytes: bytes,
+        listing_file_id=None,
+        rank=None,
+        overwrite=None,
+        is_watermarked=None,
+        alt_text=None,
+    ):
+        #  files = {'file': ('10.png', open(file,'rb'))}
+        self.file = {
+            "file": file_bytes
+        }
+        self.data = {
+            "listing_file_id": listing_file_id,
+            "rank": rank,
+            "overwrite": overwrite,
+            "is_watermarked": is_watermarked,
+            "alt_text": alt_text,
+        }
+        
+        super().__init__(
+            nullable=UploadListingFileRequest.nullable,
+            mandatory=UploadListingFileRequest.mandatory,
+        )
+    
+    @staticmethod
+    def generate_image_bytes_from_file(file):
+        with open(file, "rb") as image:
+            image_bytes = image.read()
+        return image_bytes
