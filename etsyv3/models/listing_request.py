@@ -105,6 +105,7 @@ class CreateDraftListingRequest(Request):
         should_auto_renew: bool = None,
         is_taxable: bool = None,
         listing_type: ListingType = None,
+        is_digital: bool = None,
     ):
         self.quantity = quantity
         self.title = title
@@ -137,6 +138,7 @@ class CreateDraftListingRequest(Request):
         self.should_auto_renew = should_auto_renew
         self.is_taxable = is_taxable
         self.listing_type = listing_type
+        self.is_digital = is_digital
         super().__init__(
             nullable=CreateDraftListingRequest.nullable,
             mandatory=CreateDraftListingRequest.mandatory,
