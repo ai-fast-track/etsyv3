@@ -372,7 +372,7 @@ class UploadListingFileRequest(Request):
         )
     
     # @staticmethod
-    def generate_file_bytes_from_file(filename):
+    def generate_file_bytes_from_file(self, filename):
         with open(filename, "rb") as file:
             file_bytes = file.read()
         return file_bytes
