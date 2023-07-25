@@ -315,15 +315,16 @@ class UploadListingImageRequest(Request):
 
     def __init__(
         self,
-        image_bytes: bytes,
+        filename_full_path,
         listing_image_id=None,
         rank=None,
         overwrite=None,
         is_watermarked=None,
         alt_text=None,
     ):
+       self.filename_full_path = filename_full_path 
         self.image = {
-            "image": image_bytes
+            "image": self.generate_image_bytes_from_file(filename_full_path)
         }
         self.data = {
             "listing_image_id": listing_image_id,
@@ -338,8 +339,7 @@ class UploadListingImageRequest(Request):
             mandatory=UploadListingImageRequest.mandatory,
         )
     
-    @staticmethod
-    def generate_image_bytes_from_file(file):
+    def generate_image_bytes_from_file(self, file):
         with open(file, "rb") as image:
             image_bytes = image.read()
         return image_bytes
