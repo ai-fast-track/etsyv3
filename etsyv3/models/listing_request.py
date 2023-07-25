@@ -12,6 +12,8 @@ from etsyv3.enums import (
 from etsyv3.models.product import Product
 from etsyv3.util import todict
 
+import os
+
 
 class Request:
     def __init__(self, nullable: List[str] = None, mandatory: List[str] = None):
@@ -346,7 +348,7 @@ class UploadListingFileRequest(Request):
 
     def __init__(
         self,
-        file_bytes: bytes,
+        filename_full_path,
         listing_file_id=None,
         rank=None,
         overwrite=None,
@@ -354,15 +356,14 @@ class UploadListingFileRequest(Request):
         alt_text=None,
     ):
         #  files = {'file': ('10.png', open(file,'rb'))}
+        self.filename_full_path = filename_full_path
+        self.filename = os.path.basename(filename_full_path)
         self.file = {
-            "file": file_bytes
+            "file": (self.filename, generate_file_bytes_from_file(filename_full_path))
         }
         self.data = {
             "listing_file_id": listing_file_id,
-            "rank": rank,
-            "overwrite": overwrite,
-            "is_watermarked": is_watermarked,
-            "alt_text": alt_text,
+            "name": self.filename,
         }
         
         super().__init__(
@@ -370,8 +371,8 @@ class UploadListingFileRequest(Request):
             mandatory=UploadListingFileRequest.mandatory,
         )
     
-    @staticmethod
-    def generate_image_bytes_from_file(file):
-        with open(file, "rb") as image:
-            image_bytes = image.read()
-        return image_bytes
+    # @staticmethod
+    def generate_file_bytes_from_file(filename):
+        with open(filename, "rb") as file:
+            file_bytes = file.read()
+        return file_bytes

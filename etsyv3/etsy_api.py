@@ -156,7 +156,7 @@ class EtsyAPI:
                 return_val = self.session.post(
                     uri,
                     files=request_payload.file,
-                    # data=request_payload.data
+                    data=request_payload.data
                 )
             elif method == method.POST:
                 return_val = self.session.post(uri, json=request_payload.get_dict())
@@ -361,10 +361,10 @@ class EtsyAPI:
         return self._issue_request(uri)
 
     def upload_listing_file(
-        self, shop_id: int, listing_id: int, listing_file: ListingFile
+        self, shop_id: int, listing_id: int, listing_file: UploadListingImageRequest
     ):
         uri = f"{ETSY_API_BASEURL}/shops/{shop_id}/listings/{listing_id}/files"
-        raise NotImplementedError
+        return self._issue_request(uri, method=Method.POST, request_payload=listing_file)
 
     def delete_listing_image(
         self, shop_id: int, listing_id: int, listing_image_id: int
