@@ -359,7 +359,7 @@ class UploadListingFileRequest(Request):
         self.filename_full_path = filename_full_path
         self.filename = os.path.basename(filename_full_path)
         self.file = {
-            "file": (self.filename, generate_file_bytes_from_file(filename_full_path))
+            "file": (self.filename, self.generate_file_bytes_from_file(filename_full_path))
         }
         self.data = {
             "listing_file_id": listing_file_id,
