@@ -358,7 +358,7 @@ class UploadListingFileRequest(Request):
         self.filename_full_path = filename_full_path
         self.filename = os.path.basename(filename_full_path)
         self.files = {
-            "file": (self.filename, open(filename_full_path, 'rb'), , 'multipart/form-data')
+            "file": (self.filename, open(filename_full_path, 'rb'), 'multipart/form-data')
         }
         self.data = {
             "name": self.filename,
