@@ -355,14 +355,12 @@ class UploadListingFileRequest(Request):
         is_watermarked=None,
         alt_text=None,
     ):
-        #  files = {'file': ('10.png', open(file,'rb'))}
         self.filename_full_path = filename_full_path
         self.filename = os.path.basename(filename_full_path)
-        self.file = {
-            "file": (self.filename, self.generate_file_bytes_from_file(filename_full_path))
+        self.files = {
+            "file": (self.filename, open(filename_full_path, 'rb'), , 'multipart/form-data')
         }
         self.data = {
-            "listing_file_id": listing_file_id,
             "name": self.filename,
         }
         
@@ -370,9 +368,3 @@ class UploadListingFileRequest(Request):
             nullable=UploadListingFileRequest.nullable,
             mandatory=UploadListingFileRequest.mandatory,
         )
-    
-    # @staticmethod
-    def generate_file_bytes_from_file(self, filename):
-        with open(filename, "rb") as file:
-            file_bytes = file.read()
-        return file_bytes

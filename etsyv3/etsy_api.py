@@ -155,7 +155,7 @@ class EtsyAPI:
             elif method == method.POST and isinstance(request_payload, UploadListingFileRequest):
                 return_val = self.session.post(
                     uri,
-                    files=request_payload.file,
+                    files=request_payload.files,
                     data=request_payload.data
                 )
             elif method == method.POST:
