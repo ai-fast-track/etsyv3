@@ -322,7 +322,7 @@ class UploadListingImageRequest(Request):
         is_watermarked=None,
         alt_text=None,
     ):
-       self.filename_full_path = filename_full_path 
+        self.filename_full_path = filename_full_path 
         self.image = {
             "image": self.generate_image_bytes_from_file(filename_full_path)
         }
